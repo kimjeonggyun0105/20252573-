@@ -7,9 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 :root{--navy:#0d1b2a;--navy2:#1b2d45;--blue:#1e6bff;--cyan:#00d4ff;--accent:#ff6b35;--white:#f8faff;--gray:#8899aa;--card-bg:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);}
+body.light-mode{--navy:#f4f7fb;--navy2:#e2e8f0;--blue:#1e6bff;--cyan:#0096c7;--white:#0d1b2a;--gray:#4a5568;--card-bg:rgba(255,255,255,0.85);--border:rgba(0,0,0,0.1);}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+body{background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;transition:background-color 0.3s,color 0.3s;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--navy);}
 ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
@@ -26,10 +27,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2.5rem;display:fl
 .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;display:inline-block;margin-right:6px;}
 
 /* SECTIONS */
-section{display:none;min-height:100vh;padding:100px 2.5rem 5rem;max-width:1080px;margin:0 auto;}
-section.active{display:block;}
-#home{display:none;flex-direction:column;justify-content:center;position:relative;padding-top:120px;}
-#home.active{display:flex;}
+section{display:block;padding:100px 2.5rem 5rem;max-width:1080px;margin:0 auto;}
+#home{display:flex;flex-direction:column;justify-content:center;position:relative;padding-top:120px;min-height:100vh;}
 
 /* HERO */
 .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(30,107,255,0.1);border:1px solid rgba(30,107,255,0.28);border-radius:20px;padding:6px 16px;font-size:0.78rem;font-weight:500;color:var(--cyan);width:fit-content;margin-bottom:2rem;animation:fadeDown 0.8s ease both;}
@@ -61,7 +60,7 @@ section.active{display:block;}
 .cat-label{font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:2rem 0 0.75rem;display:flex;align-items:center;gap:10px;}
 .cat-label::after{content:'';flex:1;height:1px;background:var(--border);}
 .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;margin-bottom:4px;}
-.course-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-size:0.83rem;font-weight:500;text-align:center;transition:all 0.2s;cursor:default;animation:scaleIn 0.4s ease both;}
+.course-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-size:0.83rem;font-weight:500;text-align:center;transition:all 0.2s;cursor:pointer;animation:scaleIn 0.4s ease both;}
 .course-card:hover{background:rgba(30,107,255,0.11);border-color:rgba(30,107,255,0.45);color:var(--white);transform:scale(1.04);}
 .course-card.done{background:rgba(0,212,255,0.06);border-color:rgba(0,212,255,0.22);color:#7ee8ff;}
 .course-card.done::after{content:' ✓';}
@@ -148,6 +147,7 @@ section.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeLeft{from{opacity:0;transform:translateX(50px) translateY(-50%);}to{opacity:0.88;transform:translateX(0) translateY(-50%);}}
 @keyframes scaleIn{from{opacity:0;transform:scale(0.91);}to{opacity:1;transform:scale(1);}}
+button:active, .nav-links a:active, .hbadge:active, .stat-box:active, .course-card:active, .achieve-card:active, .board-item:active, .ci-icon:active, .back-btn:active {transform: scale(0.96) !important; transition: transform 0.08s ease !important;}
 .course-card:nth-child(1){animation-delay:.04s}.course-card:nth-child(2){animation-delay:.08s}.course-card:nth-child(3){animation-delay:.12s}.course-card:nth-child(4){animation-delay:.16s}.course-card:nth-child(5){animation-delay:.2s}.course-card:nth-child(6){animation-delay:.24s}.course-card:nth-child(7){animation-delay:.28s}.course-card:nth-child(8){animation-delay:.32s}.course-card:nth-child(9){animation-delay:.36s}.course-card:nth-child(10){animation-delay:.4s}
 @media(max-width:768px){nav{padding:0 1rem;}section{padding:88px 1.2rem 3rem;}.robot-wrap{display:none;}.hero-title{font-size:1.9rem;}.course-grid{grid-template-columns:1fr 1fr;}.nav-links a{padding:5px 8px;font-size:0.76rem;}}
 </style>
@@ -159,11 +159,17 @@ section.active{display:block;}
 <nav>
   <div class="nav-logo"><span class="nav-dot"></span>RSW<span>.</span>PORT</div>
   <ul class="nav-links">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">홈</a></li>
-    <li><a onclick="showPage('year1')" id="nav-year1">1학년</a></li>
-    <li><a onclick="showPage('year2')" id="nav-year2">2학년</a></li>
-    <li><a onclick="showPage('board')" id="nav-board">자유게시판</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact">문의하기</a></li>
+    <li><a href="#home" class="nav-item active">홈</a></li>
+    <li><a href="#year1" class="nav-item">1학년</a></li>
+    <li><a href="#year2" class="nav-item">2학년</a></li>
+    <li><a href="#links" class="nav-item">관련 링크</a></li>
+    <li><a href="#board" class="nav-item">자유게시판</a></li>
+    <li><a href="#contact" class="nav-item">문의하기</a></li>
+    <li style="display:flex;align-items:center;margin-left:14px;">
+      <button onclick="toggleTheme()" id="theme-btn" style="background:rgba(30,107,255,0.15);border:1px solid rgba(30,107,255,0.4);color:var(--white);padding:6px 14px;border-radius:24px;cursor:pointer;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:all 0.2s;box-shadow:0 0 10px rgba(30,107,255,0.2);">
+        <span>밝은 모드</span> <span>☀️</span>
+      </button>
+    </li>
   </ul>
 </nav>
 
@@ -171,20 +177,34 @@ section.active{display:block;}
 <section id="home" class="active">
   <div class="hero-tag">🤖 동양미래대학교 · 로봇소프트웨어과</div>
   <h1 class="hero-title">
-    <span class="hi">안녕하세요,<br></span>
+    <span class="hi">안녕하세요, 김정균입니다.<br></span>
     <span class="grad" id="typed-title"></span><span class="cursor"></span>
   </h1>
-  <p class="hero-desc">동양미래대학교 로봇소프트웨어과 2학년 재학생입니다.<br>학교 홍보 쇼츠 공모전 최우수상(1등), 캡스톤디자인 로봇 경주대회 장려상을 수상했으며,<br>2학년 1학기 수료 후 군 입대를 앞두고 있습니다.</p>
+  <p class="hero-desc">동양미래대학교 로봇소프트웨어과 2학년 재학생입니다.<br>학교 홍보 쇼츠 공모전 최우수상(1등), 캡스톤디자인 로봇 경주대회 장려상을 수상했습니다.<br>현재 홍익대학교 전자전기융합공학과 편입을 목표로 4점대 성적을 유지하고 있으며,<br>2학년 1학기 수료 후 군 입대를 앞두고 있습니다.</p>
   <div class="hero-badges">
     <div class="hbadge"><span class="hbadge-icon">🏆</span><div class="hbadge-text"><strong>쇼츠 제작 최우수상 1등</strong><span>학교 홍보 영상 공모전</span></div></div>
-    <div class="hbadge"><span class="hbadge-icon">🤖</span><div class="hbadge-text"><strong>캡스톤디자인 장려상</strong><span>로봇 경주대회 과 5등</span></div></div>
-    <div class="hbadge"><span class="hbadge-icon">🎖️</span><div class="hbadge-text"><strong>군 입대 예정</strong><span>2학년 2학기 휴학 후 입대</span></div></div>
+    <div class="hbadge"><span class="hbadge-icon">🤖</span><div class="hbadge-text"><strong>캡스톤 장려상 (과 5등)</strong><span>팀 '넥서스' 팀장 역임</span></div></div>
+    <div class="hbadge"><span class="hbadge-icon">📈</span><div class="hbadge-text"><strong>학점 4점대 우수 성적</strong><span>홍익대 편입 목표</span></div></div>
+    <div class="hbadge"><span class="hbadge-icon">🎖️</span><div class="hbadge-text"><strong>10월 8일 훈련소 입소</strong><span>한사랑학교 복무 예정</span></div></div>
   </div>
   <div class="stats-row">
     <div class="stat-box"><div class="stat-num" data-target="2">0</div><div class="stat-label">수상 횟수</div></div>
     <div class="stat-box"><div class="stat-num" data-target="3">0</div><div class="stat-label">이수 학기</div></div>
     <div class="stat-box"><div class="stat-num" data-target="30">0</div><div class="stat-label">이수 과목+</div></div>
     <div class="stat-box"><div class="stat-num" data-target="100">0</div><div class="stat-label">열정 %</div></div>
+  </div>
+
+  <div style="margin-top:2.5rem; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:18px 24px; animation:fadeUp 0.8s ease 0.75s both;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div style="flex:1; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--gray); margin-bottom:6px;">오늘의 문장 💡</div>
+        <div id="random-quote" style="font-size:0.92rem; font-weight:600; line-height:1.4;"></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.75rem; color:var(--gray); margin-bottom:6px;">누적 방문자 👥</div>
+        <div style="font-size:1.3rem; font-weight:700; color:var(--cyan); font-family:'Space Mono', monospace;" id="visitor-count">0</div>
+      </div>
+    </div>
   </div>
 
   <!-- Robot SVG -->
@@ -226,7 +246,6 @@ section.active{display:block;}
 
 <!-- 1학년 -->
 <section id="year1">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
   <div class="yr-banner">
     <div class="yr-banner-inner" style="background:linear-gradient(135deg,rgba(30,107,255,0.16),rgba(0,212,255,0.07));">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 170" preserveAspectRatio="none">
@@ -242,7 +261,11 @@ section.active{display:block;}
   </div>
   <div class="section-header">
     <div class="section-yr">01</div>
-    <div class="section-info"><h2>전공기초 &amp; 핵심 실무</h2><p>1학년 과정에서 이수한 과목들</p></div>
+    <div class="section-info">
+      <h2>전공기초 &amp; 핵심 실무</h2>
+      <p>1학년 과정에서 이수한 과목들</p>
+      <div style="display:inline-block; margin-top:8px; padding:6px 14px; background:rgba(0,212,255,0.12); border:1px solid rgba(0,212,255,0.35); border-radius:12px; font-size:0.88rem; font-weight:600; color:var(--cyan);">💡 과목을 누르면 설명이 나옵니다</div>
+    </div>
   </div>
   <div class="cat-label">전공기초</div>
   <div class="course-grid">
@@ -256,13 +279,36 @@ section.active{display:block;}
   <div class="course-grid">
     <div class="course-card done">인공지능개론</div><div class="course-card done">마이크로컨트롤러</div><div class="course-card done">PLC프로그래밍</div><div class="course-card done">로봇오퍼레이션</div><div class="course-card done">아두이노프로그래밍</div><div class="course-card done">윈도우프로그래밍</div><div class="course-card done">웹프로그래밍</div><div class="course-card done">ROS프로그래밍기초</div><div class="course-card done">PLC제어</div><div class="course-card done">PC기반제어</div>
   </div>
-  <div class="achieve-card"><div class="achieve-ico">🏆</div><div><h3>학교 홍보 쇼츠 제작 대회 — 최우수상 1등</h3><p>학교 홍보 영상 공모전에서 기획·촬영·편집을 직접 진행하여 최우수상을 수상하였습니다. 학과의 매력과 로봇공학의 재미를 쇼츠 형식으로 담아냈습니다.</p></div></div>
-  <div class="achieve-card" style="animation-delay:0.15s;"><div class="achieve-ico">🤖</div><div><h3>캡스톤디자인 로봇 경주대회 — 장려상 (과 5등)</h3><p>학년별 캡스톤 디자인 프로젝트로 로봇 경주 대회에 출전, 팀원들과 함께 로봇 설계부터 제어 코드 구현까지 전 과정을 담당하여 장려상을 수상하였습니다.</p></div></div>
+  <div class="achieve-card" style="align-items:flex-start; flex-wrap:wrap;">
+    <div class="achieve-ico">🏆</div>
+    <div style="flex:1; min-width:280px; width:100%;">
+      <h3>학교 홍보 쇼츠 제작 대회 — 최우수상 1등</h3>
+      <p>학교 홍보 영상 공모전에서 기획·촬영·편집을 직접 진행하여 <strong>최우수상(1등)</strong>을 수상하였습니다. 학과의 매력과 로봇공학의 핵심을 트렌디한 숏폼 형태로 담아내어 높은 반응을 이끌어 냈습니다.</p>
+      <div style="margin-top:18px;">
+        <video src="shorts_video.mp4" controls autoplay loop muted playsinline style="width:100%; max-width:280px; height:auto; border-radius:14px; border:1px solid rgba(255,255,255,0.15); box-shadow:0 6px 24px rgba(0,0,0,0.3); background:rgba(0,0,0,0.4);"></video>
+      </div>
+    </div>
+  </div>
+  <div class="achieve-card" style="animation-delay:0.15s; align-items:flex-start; flex-wrap:wrap;">
+    <div class="achieve-ico">🤖</div>
+    <div style="flex:1; min-width:280px; width:100%;">
+      <h3>캡스톤디자인 로봇 경주대회 — 장려상 (학과 5등)</h3>
+      <p>팀 <strong>'넥서스(Nexus)'의 팀장</strong>을 맡아 프로젝트를 리드하며 아크릴 기반의 보행 로봇을 설계·제작했습니다. 구조체 가공, 모터 및 배터리 구동 회로를 완성하여 로봇 경주에서 훌륭한 주행을 선보이고 최종 5등의 성적을 거두었습니다.</p>
+      <div style="display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; width:100%;">
+        <div style="flex:1 1 200px; display:flex; align-items:center; justify-content:center;">
+          <video src="robot_video.mp4" controls autoplay loop muted playsinline style="width:100%; aspect-ratio:4/3; min-height:280px; object-fit:contain; border-radius:12px; border:1px solid rgba(255,255,255,0.15); box-shadow:0 4px 18px rgba(0,0,0,0.15); background:rgba(0,0,0,0.4);"></video>
+        </div>
+        <div style="flex:1 1 200px; display:flex; flex-direction:column; gap:16px;">
+          <img src="robot.jpg" alt="팀 넥서스 제작 로봇" style="width:100%; height:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.15); box-shadow:0 4px 18px rgba(0,0,0,0.15); background:rgba(0,0,0,0.2);">
+          <img src="award.jpg" alt="시상 결과 (5등 넥서스)" style="width:100%; height:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.15); box-shadow:0 4px 18px rgba(0,0,0,0.15); background:rgba(0,0,0,0.2);">
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- 2학년 -->
 <section id="year2">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
   <div class="yr-banner">
     <div class="yr-banner-inner" style="background:linear-gradient(135deg,rgba(0,212,255,0.11),rgba(30,107,255,0.07));">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 170" preserveAspectRatio="none">
@@ -277,7 +323,11 @@ section.active{display:block;}
   </div>
   <div class="section-header">
     <div class="section-yr" style="color:rgba(0,212,255,0.18);">02</div>
-    <div class="section-info"><h2>전공실무 심화 &amp; 전공분야</h2><p>현재 1학기 수강중 · 2학기 휴학 후 군 입대 예정</p></div>
+    <div class="section-info">
+      <h2>전공실무 심화 &amp; 전공분야</h2>
+      <p>현재 1학기 수강중 · 2학기 휴학 후 군 입대 예정</p>
+      <div style="display:inline-block; margin-top:8px; padding:6px 14px; background:rgba(0,212,255,0.12); border:1px solid rgba(0,212,255,0.35); border-radius:12px; font-size:0.88rem; font-weight:600; color:var(--cyan);">💡 과목을 누르면 설명이 나옵니다</div>
+    </div>
   </div>
   <div class="cat-label">전공실무 — 심화응용 (1학기 수강중)</div>
   <div class="course-grid">
@@ -287,12 +337,55 @@ section.active{display:block;}
   <div class="course-grid">
     <div class="course-card">학년별 캡스톤 디자인</div><div class="course-card">현장실습</div><div class="course-card">취업 및 창업실무</div><div class="course-card">로봇 소프트웨어 전공</div>
   </div>
-  <div class="mil-notice"><span class="ico">🎖️</span><div><h3>2학년 2학기 — 휴학 및 군 입대 예정</h3><p>2학년 1학기를 마치고 2학기에 휴학하여 군에 입대할 예정입니다. 군 복무를 마친 후 복학하여 남은 전공분야 과목들을 이수하고, 로봇 소프트웨어 분야에서 더욱 성장한 모습으로 돌아오겠습니다.</p></div></div>
+  <div class="achieve-card"><div class="achieve-ico">📈</div><div><h3>우수 학점 유지 및 편입 준비</h3><p>홍익대학교 전자전기융합공학과 편입을 목표로 현재 4점대의 우수한 성적을 유지하며 학업에 매진하고 있습니다. 더 깊이 있는 전자전기 및 로봇 융합 지식을 습득하고자 꾸준히 나아가고 있습니다.</p></div></div>
+  <div class="mil-notice" style="align-items:flex-start; flex-wrap:wrap;">
+    <span class="ico" style="font-size:2.4rem;">🎖️</span>
+    <div style="flex:1; min-width:280px; width:100%;">
+      <h3 style="font-size:1.05rem; font-weight:700; color:#ff8c5a; margin-bottom:8px;">10월 8일 훈련소 입소 및 한사랑학교 복무 안내</h3>
+      <p style="font-size:0.88rem; color:var(--gray); line-height:1.7;">2학년 1학기를 마치고 2학기에 휴학하여 <strong>10월 8일 훈련소 입소 후, 한사랑학교에서 복무</strong>할 예정입니다. 성실히 책임을 다한 후 복학하여 로봇 소프트웨어 분야의 남은 전공 과목들을 이수하고 더욱 성장한 모습으로 돌아오겠습니다.</p>
+      <div style="margin-top:18px;">
+        <img src="hansarang.jpg" alt="한사랑학교 전경" style="width:100%; max-width:500px; height:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.15); box-shadow:0 6px 20px rgba(0,0,0,0.2);" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'250\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%231b2d45\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'%238899aa\' font-size=\'15\' text-anchor=\'middle\' dy=\'.3em\'%3E🖼️ hansarang.jpg 사진 파일 필요 (같은 폴더)%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 관련 링크 -->
+<section id="links">
+  <div class="section-header">
+    <div class="section-yr" style="color:rgba(30,107,255,0.18);">LNK</div>
+    <div class="section-info"><h2>관련 링크</h2><p>로봇소프트웨어과와 관련된 유용한 사이트들입니다</p></div>
+  </div>
+  <div class="board-list">
+    <a href="https://www.youtube.com/@auto2con" target="_blank" class="board-item" style="text-decoration:none; display:flex; align-items:center; gap:16px;">
+      <div style="font-size:2.2rem; opacity:0.9;">📺</div>
+      <div class="board-main" style="flex:1;">
+        <div class="title" style="color:var(--white);">2025년 동양로봇대회 (YouTube)</div>
+        <div class="preview">2학기 때 진행해야 하는 로봇 대회의 참고 영상들이 있는 채널</div>
+      </div>
+      <div style="color:var(--gray); font-size:1.2rem;">↗</div>
+    </a>
+    <a href="https://bootcamp.dongyang.ac.kr/" target="_blank" class="board-item" style="text-decoration:none; display:flex; align-items:center; gap:16px; animation-delay:0.06s;">
+      <div style="font-size:2.2rem; opacity:0.9;">🚀</div>
+      <div class="board-main" style="flex:1;">
+        <div class="title" style="color:var(--white);">첨단산업 부트캠프</div>
+        <div class="preview">동양미래대학교 첨단산업 인재양성 부트캠프 신청 및 과정 안내</div>
+      </div>
+      <div style="color:var(--gray); font-size:1.2rem;">↗</div>
+    </a>
+    <a href="https://cafe.naver.com/dyrobot" target="_blank" class="board-item" style="text-decoration:none; display:flex; align-items:center; gap:16px; animation-delay:0.12s;">
+      <div style="font-size:2.2rem; opacity:0.9;">☕</div>
+      <div class="board-main" style="flex:1;">
+        <div class="title" style="color:var(--white);">DYROBOT 네이버 카페</div>
+        <div class="preview">학과 커뮤니티, 과제 공유 및 학생 여러분의 소통 공간</div>
+      </div>
+      <div style="color:var(--gray); font-size:1.2rem;">↗</div>
+    </a>
+  </div>
 </section>
 
 <!-- 자유게시판 -->
 <section id="board">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
   <div class="section-header">
     <div class="section-yr" style="color:rgba(255,107,53,0.18);">BRD</div>
     <div class="section-info"><h2>자유게시판</h2><p>자유롭게 이야기를 나눠요</p></div>
@@ -308,7 +401,6 @@ section.active{display:block;}
 
 <!-- 문의하기 -->
 <section id="contact">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
   <div class="section-header">
     <div class="section-yr" style="color:rgba(0,212,255,0.18);">MSG</div>
     <div class="section-info"><h2>문의하기</h2><p>궁금한 점이 있으면 언제든지 연락해 주세요</p></div>
@@ -341,6 +433,8 @@ section.active{display:block;}
       <div id="cf-form">
         <label class="cf-label">이름</label>
         <input class="cf-input" id="cf-name" placeholder="이름을 입력하세요"/>
+        <label class="cf-label">연락처 (선택)</label>
+        <input class="cf-input" id="cf-contact" placeholder="이메일 또는 전화번호"/>
         <label class="cf-label">문의 유형</label>
         <select class="cf-select" id="cf-type">
           <option value="">선택해 주세요</option>
@@ -366,6 +460,18 @@ section.active{display:block;}
   </div>
 </section>
 
+<!-- 과목 설명 모달 -->
+<div class="modal-overlay" id="course-modal">
+  <div class="modal" style="max-width:360px; text-align:center;">
+    <div style="font-size:2.2rem; margin-bottom:1rem;">📘</div>
+    <h3 id="course-modal-title" style="margin-bottom:0.8rem; color:var(--cyan);">과목명</h3>
+    <p id="course-modal-desc" style="color:var(--gray); font-size:0.88rem; line-height:1.6; margin-bottom:1.5rem; word-break:keep-all;">과목 설명입니다.</p>
+    <div class="modal-actions" style="justify-content:center;">
+      <button class="modal-submit" onclick="closeModal('course-modal')">확인</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODALS -->
 <div class="modal-overlay" id="write-modal">
   <div class="modal">
@@ -373,6 +479,7 @@ section.active{display:block;}
     <label>제목</label><input id="modal-post-title" placeholder="제목을 입력하세요"/>
     <label>내용</label><textarea id="modal-post-body" placeholder="내용을 입력하세요"></textarea>
     <label>작성자</label><input id="modal-post-author" placeholder="닉네임 (미입력 시 익명)"/>
+    <label>연락처 (선택)</label><input id="modal-post-contact" placeholder="이메일 또는 전화번호"/>
     <div class="modal-actions"><button class="modal-cancel" onclick="closeModal('write-modal')">취소</button><button class="modal-submit" onclick="submitPost()">등록하기</button></div>
   </div>
 </div>
@@ -382,6 +489,7 @@ section.active{display:block;}
     <input type="hidden" id="edit-post-id"/>
     <label>제목</label><input id="edit-post-title"/>
     <label>내용</label><textarea id="edit-post-body"></textarea>
+    <label>연락처 (선택)</label><input id="edit-post-contact" placeholder="이메일 또는 전화번호"/>
     <div class="modal-actions"><button class="modal-cancel" onclick="closeModal('edit-modal')">취소</button><button class="modal-submit" onclick="saveEdit()">수정 완료</button></div>
   </div>
 </div>
@@ -400,6 +508,56 @@ section.active{display:block;}
 <script>
 document.addEventListener('mousemove',e=>{const g=document.getElementById('glow');g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';});
 
+const courseDesc = {
+  "엔지니어링 기초": "로봇 공학의 기본 원리와 수학적/물리적 기초 지식을 다집니다.",
+  "3차원CAD": "Fusion 360 등을 활용해 입체 도면 및 구조체 모델링 역량을 기릅니다.",
+  "컴퓨터와챗GPT활용": "챗GPT와 다양한 AI 툴을 활용해 실무 효율을 높이는 방안을 학습합니다.",
+  "로봇기초실습": "단순한 기구학 관절과 메커니즘을 조립하며 로봇 하드웨어 감각을 익힙니다.",
+  "전공영어": "영어 도면 및 기술 문서를 읽고 해석하는 기초 어학 능력을 배양합니다.",
+  "기계제도": "도면 해독과 2D/3D 기계 부품 설계 규격을 체계적으로 학습합니다.",
+  "로봇공학기초": "로봇 센서, 구동기능 등 시스템을 구성하는 전반적인 핵심 요소를 배웁니다.",
+  "CAD기초": "오토캐드 등 기본 캐드 소프트웨어를 익혀 평면적인 제품 도면을 설계합니다.",
+  "전기회로": "옴의 법칙 등 기본 전기회로망 이론 및 결선 실습을 진행합니다.",
+  "전자회로": "트랜지스터, 다이오드 등 반도체 소자를 활용한 아날로그 회로의 동작을 배웁니다.",
+  "디지털논리회로": "논리 게이트의 조합 및 순차 논리의 구조로 디지털 전자 기기의 원리를 파악합니다.",
+  "파이썬프로그래밍": "파이썬 언어의 기초 문법을 습득해 향후 AI 시스템의 베이스라인 역량을 기릅니다.",
+  "인공지능개론": "기계학습 및 딥러닝과 같은 인공지능 분야의 작동 방식 및 개념을 다룹니다.",
+  "마이크로컨트롤러": "마이컴 보드를 이용해 C언어로 칩과 센서의 데이터를 다루는 것을 배웁니다.",
+  "PLC프로그래밍": "현장 자동화를 이끄는 설비 PLC 기반 시퀀스 제어 프로그램 기초를 다룹니다.",
+  "로봇오퍼레이션": "실제 상용 매니퓰레이터 로봇의 티칭 기법과 안전한 조작 기술을 체득합니다.",
+  "아두이노프로그래밍": "접근성 높은 아두이노 보드로 센서 입출력 및 모터 제어를 실습합니다.",
+  "윈도우프로그래밍": "C# 기반으로 PC에서 활용 가능한 윈도우용 응용 프로그램(GUI)을 구축합니다.",
+  "웹프로그래밍": "HTML, CSS, JS를 바탕으로 웹 브라우저상에서의 정보 전달과 화면 처리를 배웁니다.",
+  "ROS프로그래밍기초": "현대 로봇 개발의 표준 플랫폼인 ROS의 패키지/노드 통신 개념을 배웁니다.",
+  "PLC제어": "공압/유압 시스템을 연계하며 조금 더 복잡한 PLC 모듈 확장 제어를 실습합니다.",
+  "PC기반제어": "산업용 통신 및 데이터 수집기를 활용, PC 응용 프로그램 단위에서의 제어를 학습합니다.",
+  "인공지능응용": "컴퓨터 비전을 연동한 영상 처리 등 AI의 심화된 모델 적용 및 결과를 분석합니다.",
+  "펌웨어프로그래밍": "각종 통신 및 인터럽트를 제어하는 심화 임베디드 펌웨어 구조를 프로그래밍합니다.",
+  "모바일앱프로그래밍": "네트워크로 디바이스를 원격 확인·제어하는 안드로이드 기반 앱을 제작합니다.",
+  "자동화통신": "시리얼, 통신 규약 등 기기 간 신뢰성 높은 산업용 하드웨어 통신을 구축합니다.",
+  "CAD 응용": "파라메트릭 도면 설계와 조립 가상화를 통해 최적의 기계 모델을 도출합니다.",
+  "ROS프로그래밍응용": "라이다 및 카메라 센서 구동, 주행 및 매핑 내비게이션 알고리즘을 실습합니다.",
+  "로봇공학응용": "역기구학과 운동 궤적 궤환 계획 등 로봇 팔의 제어 수학을 심도 있게 다룹니다.",
+  "로봇센서": "비전, 접촉, 위치 스캐너 등 로봇 주행 및 동작에 필요한 핵심 센서를 이해합니다.",
+  "모터제어": "서보, 스텝, BLDC 등 다양한 목적의 액추에이터의 정밀한 구동 기법을 체득합니다.",
+  "학년별 캡스톤 디자인": "기획안 구상થી 하드웨어 및 소프트웨어 통합 디버깅까지 팀 단위 프로젝트를 진행합니다.",
+  "현장실습": "실제 개발 및 자동화 산업 현장의 체계화된 과정과 문제 해결 능력을 온몸으로 부딪혀 배웁니다.",
+  "취업 및 창업실무": "적성에 맞는 분야의 이력서 작성, 실무 인터뷰, 산업 동향을 파악하여 진로를 준비합니다.",
+  "로봇 소프트웨어 전공": "마지막으로 로봇 전공 지식을 하나로 아우르며, 종합 소프트웨어/하드웨어 시스템을 다집니다."
+};
+
+function showCourseInfo(el) {
+  const name = el.textContent.replace(' ✓', '').trim();
+  const desc = courseDesc[name] || "상세 설명을 준비 중입니다.";
+  document.getElementById('course-modal-title').textContent = name;
+  document.getElementById('course-modal-desc').textContent = desc;
+  document.getElementById('course-modal').classList.add('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.course-card').forEach(card => card.addEventListener('click', function() { showCourseInfo(this); }));
+});
+
 const phrases=['로봇소프트웨어 전공생입니다.','미래를 설계하는 엔지니어입니다.','끊임없이 성장하는 중입니다.'];
 let pi=0,ci=0,isDeleting=false;
 const el=document.getElementById('typed-title');
@@ -408,33 +566,79 @@ setTimeout(type,900);
 
 function animateCounters(){document.querySelectorAll('.stat-num[data-target]').forEach(el=>{const t=+el.dataset.target;let c=0;const s=Math.ceil(t/40);const id=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c;if(c>=t)clearInterval(id);},40);});}
 
-let prevPage='home';
-function showPage(id){prevPage=document.querySelector('section.active')?.id||'home';document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));document.getElementById(id).classList.add('active');const n=document.getElementById('nav-'+id);if(n)n.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='home')animateCounters();}
-function goBack(){showPage(prevPage);}
+// 스크롤 시 자동 네비게이션 활성화
+window.addEventListener('scroll', () => {
+  let current = '';
+  document.querySelectorAll('section').forEach(sec => {
+    if (pageYOffset >= (sec.offsetTop - 300)) current = sec.getAttribute('id');
+  });
+  document.querySelectorAll('.nav-links a.nav-item').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
 
-let posts=[],pId=1;
-function renderBoard(){const list=document.getElementById('board-list');document.getElementById('post-count').textContent=posts.length;if(!posts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📭</span>아직 작성된 글이 없습니다.<br>첫 번째 글을 남겨보세요!</div>';return;}list.innerHTML=posts.map((p,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">#${String(p.id).padStart(3,'0')}</div><div class="title">${esc(p.title)}</div><div class="preview">${esc(p.body.length>80?p.body.slice(0,80)+'…':p.body)}</div><div class="meta">${esc(p.author)} · ${p.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${p.id},'board')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${p.id},'board')">삭제</button></div></div>`).join('');}
+let posts=[
+  {id:1, type:'board', title:'정균아 사이트 진짜 멋지다!', body:'포트폴리오 너무 깔끔하게 잘 만들었네. 편입도 꼭 성공할 거야 화이팅!', author:'동기', contact:'', date:now(), password:'123'},
+  {id:2, type:'board', title:'한사랑학교 복무 응원합니다 🫡', body:'10월 훈련소 가시는군요. 다치지 않고 건강하게 잘 다녀오세요!', author:'익명', contact:'', date:now(), password:'123'},
+  {id:3, type:'board', title:'쇼츠 공모전 영상 너무 재밌어요 ㅋㅋㅋ', body:'최우수상 받으실 만 합니다. 기획이랑 아이디어가 너무 좋네요👍', author:'방문자', contact:'guest@example.com', date:now(), password:'123'}
+];
+let pId=4;
+function renderBoard(){const list=document.getElementById('board-list');document.getElementById('post-count').textContent=posts.length;if(!posts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📭</span>아직 작성된 글이 없습니다.<br>첫 번째 글을 남겨보세요!</div>';return;}list.innerHTML=posts.map((p,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">#${String(p.id).padStart(3,'0')}</div><div class="title">${esc(p.title)}</div><div class="preview">${esc(p.body.length>80?p.body.slice(0,80)+'…':p.body)}</div><div class="meta">${esc(p.author)}${p.contact?' · '+esc(p.contact):''} · ${p.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${p.id},'board')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${p.id},'board')">삭제</button></div></div>`).join('');}
 
 let contacts=[],cId=1;
-function renderContacts(){const list=document.getElementById('contact-list');document.getElementById('contact-count').textContent=contacts.length;if(!contacts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📩</span>아직 문의 내역이 없습니다.</div>';return;}list.innerHTML=contacts.map((c,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">[${esc(c.type||'기타')}]</div><div class="title">${esc(c.name)}님의 문의</div><div class="preview">${esc(c.msg.length>80?c.msg.slice(0,80)+'…':c.msg)}</div><div class="meta">${c.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${c.id},'contact')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${c.id},'contact')">삭제</button></div></div>`).join('');}
+function renderContacts(){const list=document.getElementById('contact-list');document.getElementById('contact-count').textContent=contacts.length;if(!contacts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📩</span>아직 문의 내역이 없습니다.</div>';return;}list.innerHTML=contacts.map((c,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">[${esc(c.type||'기타')}]</div><div class="title">${esc(c.name)}님의 문의</div><div class="preview">${esc(c.msg.length>80?c.msg.slice(0,80)+'…':c.msg)}</div><div class="meta">${c.contact?esc(c.contact)+' · ':''}${c.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${c.id},'contact')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${c.id},'contact')">삭제</button></div></div>`).join('');}
 
-function openWriteModal(){['modal-post-title','modal-post-body','modal-post-author'].forEach(id=>document.getElementById(id).value='');document.getElementById('write-modal').classList.add('open');}
+function openWriteModal(){['modal-post-title','modal-post-body','modal-post-author','modal-post-contact'].forEach(id=>document.getElementById(id).value='');document.getElementById('write-modal').classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-function submitPost(){const t=document.getElementById('modal-post-title').value.trim();const b=document.getElementById('modal-post-body').value.trim();const a=document.getElementById('modal-post-author').value.trim()||'익명';if(!t||!b){alert('제목과 내용을 입력해 주세요.');return;}posts.unshift({id:pId++,title:t,body:b,author:a,date:now()});closeModal('write-modal');renderBoard();}
+function submitPost(){const t=document.getElementById('modal-post-title').value.trim();const b=document.getElementById('modal-post-body').value.trim();const a=document.getElementById('modal-post-author').value.trim()||'익명';const c=document.getElementById('modal-post-contact').value.trim();if(!t||!b){alert('제목과 내용을 입력해 주세요.');return;}posts.unshift({id:pId++,title:t,body:b,author:a,contact:c,date:now()});closeModal('write-modal');renderBoard();}
 
 let deleteId=null,deleteType='board';
 function openDeleteConfirm(id,type){deleteId=id;deleteType=type;document.getElementById('confirm-modal').classList.add('open');}
 function confirmDelete(){if(deleteType==='board'){posts=posts.filter(p=>p.id!==deleteId);renderBoard();}else{contacts=contacts.filter(c=>c.id!==deleteId);renderContacts();}closeModal('confirm-modal');}
 
 let editType='board';
-function openEditModal(id,type){editType=type;const items=type==='board'?posts:contacts;const item=items.find(x=>x.id===id);if(!item)return;document.getElementById('edit-post-id').value=id;document.getElementById('edit-post-title').value=type==='board'?item.title:item.name;document.getElementById('edit-post-body').value=type==='board'?item.body:item.msg;document.getElementById('edit-modal').classList.add('open');}
-function saveEdit(){const id=+document.getElementById('edit-post-id').value;const t=document.getElementById('edit-post-title').value.trim();const b=document.getElementById('edit-post-body').value.trim();if(!t||!b){alert('내용을 입력해 주세요.');return;}if(editType==='board'){const p=posts.find(x=>x.id===id);if(p){p.title=t;p.body=b;}renderBoard();}else{const c=contacts.find(x=>x.id===id);if(c){c.name=t;c.msg=b;}renderContacts();}closeModal('edit-modal');}
+function openEditModal(id,type){editType=type;const items=type==='board'?posts:contacts;const item=items.find(x=>x.id===id);if(!item)return;document.getElementById('edit-post-id').value=id;document.getElementById('edit-post-title').value=type==='board'?item.title:item.name;document.getElementById('edit-post-body').value=type==='board'?item.body:item.msg;document.getElementById('edit-post-contact').value=item.contact||'';document.getElementById('edit-modal').classList.add('open');}
+function saveEdit(){const id=+document.getElementById('edit-post-id').value;const t=document.getElementById('edit-post-title').value.trim();const b=document.getElementById('edit-post-body').value.trim();const c=document.getElementById('edit-post-contact').value.trim();if(!t||!b){alert('내용을 입력해 주세요.');return;}if(editType==='board'){const p=posts.find(x=>x.id===id);if(p){p.title=t;p.body=b;p.contact=c;}renderBoard();}else{const p=contacts.find(x=>x.id===id);if(p){p.name=t;p.msg=b;p.contact=c;}renderContacts();}closeModal('edit-modal');}
 
-function submitContact(){const name=document.getElementById('cf-name').value.trim();const type=document.getElementById('cf-type').value;const msg=document.getElementById('cf-msg').value.trim();if(!name||!msg){alert('이름과 메시지를 입력해 주세요.');return;}contacts.unshift({id:cId++,name,type,msg,date:now()});renderContacts();document.getElementById('cf-form').style.display='none';document.getElementById('cf-sent').style.display='block';setTimeout(()=>{document.getElementById('cf-form').style.display='block';document.getElementById('cf-sent').style.display='none';['cf-name','cf-msg'].forEach(id=>document.getElementById(id).value='');document.getElementById('cf-type').value='';},3000);}
+function submitContact(){const name=document.getElementById('cf-name').value.trim();const type=document.getElementById('cf-type').value;const msg=document.getElementById('cf-msg').value.trim();const contact=document.getElementById('cf-contact').value.trim();if(!name||!msg){alert('이름과 메시지를 입력해 주세요.');return;}contacts.unshift({id:cId++,name,type,msg,contact,date:now()});renderContacts();document.getElementById('cf-form').style.display='none';document.getElementById('cf-sent').style.display='block';setTimeout(()=>{document.getElementById('cf-form').style.display='block';document.getElementById('cf-sent').style.display='none';['cf-name','cf-contact','cf-msg'].forEach(id=>document.getElementById(id).value='');document.getElementById('cf-type').value='';},3000);}
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function now(){const d=new Date();return`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+
+// 다크/라이트 모드 토글
+let isLight = false;
+function toggleTheme() {
+  isLight = !isLight;
+  document.body.classList.toggle('light-mode', isLight);
+  const btn = document.getElementById('theme-btn');
+  if(btn) btn.innerHTML = isLight ? '<span>다크 모드</span> <span>🌙</span>' : '<span>밝은 모드</span> <span>☀️</span>';
+}
+
+// 명언 및 방문자 카운터 초기화
+function initExtras() {
+  const quotes = [
+    "도전은 인생을 흥미롭게 만들고, 극복은 인생을 의미 있게 한다.",
+    "천재는 1%의 영감과 99%의 노력으로 이루어진다.",
+    "배움에는 끝이 없다. 호기심을 유지하라.",
+    "미래의 가장 큰 위험은 위험을 감수하지 않는 것이다.",
+    "시작이 반이다. 지금 바로 행동하라.",
+    "실패는 성공의 어머니이다. 두려워하지 마라.",
+    "성공은 끝이 아니며 실패는 치명적이지 않다. 중요한 것은 계속할 수 있는 용기다."
+  ];
+  const qEl = document.getElementById('random-quote');
+  if(qEl) qEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  
+  // 데모 목적의 시작점 1024를 지우고 0부터 순수하게 카운트되도록 새 키를 적용
+  let visits = parseInt(localStorage.getItem('realVisitorCount') || '0');
+  visits++;
+  localStorage.setItem('realVisitorCount', visits);
+  const vEl = document.getElementById('visitor-count');
+  if(vEl) vEl.textContent = visits.toLocaleString();
+}
+initExtras();
+
 animateCounters();
 </script>
 </body>

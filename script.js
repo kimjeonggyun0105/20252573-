@@ -119,9 +119,10 @@ window.addEventListener('scroll', () => {
 // [주의] 아래 firebaseConfig 정보를 본인의 파이어베이스 설정값으로 교체해 주세요.
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  authDomain: "kimjeonggyun-98cf2.firebaseapp.com",
+  databaseURL: "https://kimjeonggyun-98cf2-default-rtdb.firebaseio.com",
+  projectId: "kimjeonggyun-98cf2",
+  storageBucket: "kimjeonggyun-98cf2.appspot.com",
   messagingSenderId: "YOUR_MESSAGING_ID",
   appId: "YOUR_APP_ID"
 };
@@ -133,22 +134,28 @@ let useFirebase = false;
 try {
   if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
     firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
+    db = firebase.database(); // Realtime Database 사용
     useFirebase = true;
-    console.log("Firebase Firestore initialized.");
+    console.log("Firebase Realtime Database initialized.");
   }
 } catch (e) {
   console.warn("Firebase initialization failed or config missing. Using LocalStorage fallback.", e);
 }
 
 let posts = [];
-let pId = Date.now(); // 유니크 아이디 생성을 위해 현재 시간 사용
+let pId = Date.now(); 
 
 function loadPosts() {
   if (useFirebase) {
-    // Firestore 리스너 연결 (실시간 업데이트)
-    db.collection("posts").orderBy("date", "desc").onSnapshot((snapshot) => {
-      posts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Realtime Database 리스너 연결 (실시간 업데이트)
+    db.ref("자유게시판").on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // 객체 형태의 데이터를 배열로 변환
+        posts = Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
+      } else {
+        posts = [];
+      }
       renderBoard();
     });
   } else {
@@ -247,7 +254,7 @@ window.submitPost = function() {
   const newPost = { title: t, body: b, author: a, contact: c, date: now() };
 
   if (useFirebase) {
-    db.collection("posts").add(newPost);
+    db.ref("자유게시판").push(newPost);
   } else {
     newPost.id = Date.now();
     posts.unshift(newPost);
@@ -268,7 +275,7 @@ window.openDeleteConfirm = function(id, type) {
 window.confirmDelete = function() {
   if (deleteType === 'board') {
     if (useFirebase) {
-      db.collection("posts").doc(deleteId).delete();
+      db.ref("자유게시판").child(deleteId).remove();
     } else {
       posts = posts.filter(p => p.id !== deleteId);
       localStorage.setItem('portfolio_posts', JSON.stringify(posts));

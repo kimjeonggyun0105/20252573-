@@ -118,13 +118,13 @@ window.addEventListener('scroll', () => {
 // --- Firebase / 데이터 관리 로직 ---
 // [주의] 아래 firebaseConfig 정보를 본인의 파이어베이스 설정값으로 교체해 주세요.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_API_KEY", // [필요] 이 부분에 API 키를 넣어주세요
   authDomain: "kimjeonggyun-98cf2.firebaseapp.com",
   databaseURL: "https://kimjeonggyun-98cf2-default-rtdb.firebaseio.com",
   projectId: "kimjeonggyun-98cf2",
   storageBucket: "kimjeonggyun-98cf2.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_ID",
-  appId: "YOUR_APP_ID"
+  messagingSenderId: "272292042418",
+  appId: "1:272292042418:web:adee867debfb8d9daafbab"
 };
 
 let db = null;

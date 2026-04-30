@@ -118,13 +118,14 @@ window.addEventListener('scroll', () => {
 // --- Firebase / 데이터 관리 로직 ---
 // [주의] 아래 firebaseConfig 정보를 본인의 파이어베이스 설정값으로 교체해 주세요.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY", // [필요] 이 부분에 API 키를 넣어주세요
+  apiKey: "AIzaSyChZd_7rfN4heF1Sq-PWG8TT2pdc7tJ4k",
   authDomain: "kimjeonggyun-98cf2.firebaseapp.com",
   databaseURL: "https://kimjeonggyun-98cf2-default-rtdb.firebaseio.com",
   projectId: "kimjeonggyun-98cf2",
-  storageBucket: "kimjeonggyun-98cf2.appspot.com",
+  storageBucket: "kimjeonggyun-98cf2.firebasestorage.app",
   messagingSenderId: "272292042418",
-  appId: "1:272292042418:web:adee867debfb8d9daafbab"
+  appId: "1:272292042418:web:adee867debfb8d9daafbab",
+  measurementId: "G-A22F4S5XG2"
 };
 
 let db = null;
@@ -148,7 +149,7 @@ let pId = Date.now();
 function loadPosts() {
   if (useFirebase) {
     // Realtime Database 리스너 연결 (실시간 업데이트)
-    db.ref("자유게시판").on("value", (snapshot) => {
+    db.ref("게시판").on("value", (snapshot) => {
       const data = snapshot.val();
       if (data) {
         // 객체 형태의 데이터를 배열로 변환
@@ -254,7 +255,7 @@ window.submitPost = function() {
   const newPost = { title: t, body: b, author: a, contact: c, date: now() };
 
   if (useFirebase) {
-    db.ref("자유게시판").push(newPost);
+    db.ref("게시판").push(newPost);
   } else {
     newPost.id = Date.now();
     posts.unshift(newPost);

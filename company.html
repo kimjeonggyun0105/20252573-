@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관련 회사 - 학교 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-hero { height: 40vh; background: linear-gradient(135deg, #1d2671, #c33764); display: flex; align-items: center; justify-content: center; color: var(--white); }
+        .content-section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+        .company-list { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 40px; }
+        .company-logo { width: 180px; height: 100px; background: white; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; color: #999; filter: grayscale(1); transition: var(--transition); }
+        .company-logo:hover { filter: grayscale(0); border-color: var(--secondary-color); color: var(--primary-color); transform: scale(1.05); }
+    </style>
+</head>
+<body class="sub-page">
+    <header id="header" class="scrolled">
+        <div class="container">
+            <div class="logo"><a href="index.html">DONGYANG MIRAE</a></div>
+            <nav>
+                <ul>
+                    <li><a href="intro.html">학교소개</a></li>
+                    <li><a href="dept.html">학과소개</a></li>
+                    <li><a href="portfolio.html">나의 포트폴리오</a></li>
+                    <li><a href="company.html" class="active">관련 회사</a></li>
+                    <li><a href="life.html">학교 생활</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <button class="icon-btn search-btn" onclick="location.href='board.html'">🔍</button>
+                <button class="icon-btn menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="sub-hero"><h1>관련 회사</h1></section>
+        <section class="content-section">
+            <h2 style="text-align: center; margin-bottom: 20px;">우리 학교와 함께하는 파트너사</h2>
+            <div class="company-list">
+                <div class="company-logo animate-fade-up">SAMSUNG</div>
+                <div class="company-logo animate-fade-up delay-1">NAVER</div>
+                <div class="company-logo animate-fade-up delay-2">KAKAO</div>
+                <div class="company-logo animate-fade-up">LG CNS</div>
+                <div class="company-logo animate-fade-up delay-1">SK C&C</div>
+                <div class="company-logo animate-fade-up delay-2">K-WATER</div>
+            </div>
+        </section>
+    </main>
+    <footer style="padding: 40px; background: #333; color: white; text-align: center;"><p>&copy; 2026 SCHOOL LOGO. All rights reserved.</p></footer>
+    <script src="main.js"></script>
+</body>
+</html>

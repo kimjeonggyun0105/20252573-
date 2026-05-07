@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 포트폴리오 - 학교 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-hero { height: 40vh; background: linear-gradient(135deg, #6a11cb, #2575fc); display: flex; align-items: center; justify-content: center; color: var(--white); }
+        .content-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+        .portfolio-item { position: relative; border-radius: 10px; overflow: hidden; height: 350px; background: #eee; cursor: pointer; }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .portfolio-item:hover img { transform: scale(1.1); }
+        .portfolio-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
+    </style>
+</head>
+<body class="sub-page">
+    <header id="header" class="scrolled">
+        <div class="container">
+            <div class="logo"><a href="index.html">DONGYANG MIRAE</a></div>
+            <nav>
+                <ul>
+                    <li><a href="intro.html">학교소개</a></li>
+                    <li><a href="dept.html">학과소개</a></li>
+                    <li><a href="portfolio.html" class="active">나의 포트폴리오</a></li>
+                    <li><a href="company.html">관련 회사</a></li>
+                    <li><a href="life.html">학교 생활</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <button class="icon-btn search-btn" onclick="location.href='board.html'">🔍</button>
+                <button class="icon-btn menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="sub-hero"><h1>나의 포트폴리오</h1></section>
+        <section class="content-section">
+            <div class="portfolio-grid">
+                <div class="portfolio-item animate-fade-up">
+                    <img src="assets/hero_bg.png" alt="Project 1">
+                    <div class="portfolio-overlay"><h4>스마트 홈 제어 시스템</h4><p>IoT 기반 가전 제어 솔루션</p></div>
+                </div>
+                <div class="portfolio-item animate-fade-up delay-1">
+                    <img src="assets/hero_bg.png" alt="Project 2">
+                    <div class="portfolio-overlay"><h4>AI 챗봇 개발</h4><p>자연어 처리를 활용한 학사 안내 봇</p></div>
+                </div>
+                <div class="portfolio-item animate-fade-up delay-2">
+                    <img src="assets/hero_bg.png" alt="Project 3">
+                    <div class="portfolio-overlay"><h4>보안 시스템 대시보드</h4><p>실시간 침입 탐지 및 로그 시각화</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer style="padding: 40px; background: #333; color: white; text-align: center;"><p>&copy; 2026 DONGYANG MIRAE UNIV. All rights reserved.</p></footer>
+    <script src="main.js"></script>
+</body>
+</html>

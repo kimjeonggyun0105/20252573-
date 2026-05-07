@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 생활 - 학교 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-hero { height: 40vh; background: linear-gradient(135deg, #11998e, #38ef7d); display: flex; align-items: center; justify-content: center; color: var(--white); }
+        .content-section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+        .life-timeline { position: relative; margin-top: 40px; }
+        .timeline-item { padding: 20px; border-left: 3px solid var(--secondary-color); margin-left: 20px; margin-bottom: 30px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -10px; top: 25px; width: 16px; height: 16px; background: var(--secondary-color); border-radius: 50%; }
+        .timeline-date { font-weight: 700; color: var(--primary-color); }
+    </style>
+</head>
+<body class="sub-page">
+    <header id="header" class="scrolled">
+        <div class="container">
+            <div class="logo"><a href="index.html">DONGYANG MIRAE</a></div>
+            <nav>
+                <ul>
+                    <li><a href="intro.html">학교소개</a></li>
+                    <li><a href="dept.html">학과소개</a></li>
+                    <li><a href="portfolio.html">나의 포트폴리오</a></li>
+                    <li><a href="company.html">관련 회사</a></li>
+                    <li><a href="life.html" class="active">학교 생활</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <button class="icon-btn search-btn" onclick="location.href='board.html'">🔍</button>
+                <button class="icon-btn menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="sub-hero"><h1>동양미래대학교 학사일정</h1></section>
+        <section class="content-section">
+            <div class="life-timeline">
+                <div class="timeline-item animate-fade-up">
+                    <div class="timeline-date">3월</div>
+                    <h4>1학기 개강 및 신입생 MT</h4>
+                    <p>설레는 새 학기의 시작! 동기들과의 첫 만남과 즐거운 MT 프로그램이 진행됩니다.</p>
+                </div>
+                <div class="timeline-item animate-fade-up delay-1">
+                    <div class="timeline-date">4월</div>
+                    <h4>1학기 중간고사</h4>
+                    <p>첫 학업 평가 기간입니다. 그동안 배운 지식을 점검하고 실력을 확인합니다.</p>
+                </div>
+                <div class="timeline-item animate-fade-up delay-1">
+                    <div class="timeline-date">5월</div>
+                    <h4>동양미래대학교 체육대회</h4>
+                    <p>타 학과 학생들과의 교류 및 로봇소프트웨어학과의 단합력을 기르는 체육 행사가 열립니다.</p>
+                </div>
+                <div class="timeline-item animate-fade-up delay-2">
+                    <div class="timeline-date">10월</div>
+                    <h4>학교 축제 (아카데미 페스티벌)</h4>
+                    <p>동양미래대학교 학생들의 끼와 재능을 맘껏 발휘하는 연중 가장 큰 행사입니다.</p>
+                </div>
+                <div class="timeline-item animate-fade-up delay-2">
+                    <div class="timeline-date">11월</div>
+                    <h4>로봇소프트웨어학과 졸업작품 전시회</h4>
+                    <p>선배들의 캡스톤 디자인 기량과 미래 로봇 기술을 엿볼 수 있는 실무 제작 발표회입니다.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer style="padding: 40px; background: #333; color: white; text-align: center;"><p>&copy; 2026 DONGYANG MIRAE UNIV. All rights reserved.</p></footer>
+    <script src="main.js"></script>
+</body>
+</html>

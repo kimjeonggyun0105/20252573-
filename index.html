@@ -1,441 +1,93 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>로봇소프트웨어과 | 나의 학사 로드맵</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<style>
-:root{--navy:#0d1b2a;--navy2:#1b2d45;--blue:#1e6bff;--cyan:#00d4ff;--accent:#ff6b35;--white:#f8faff;--gray:#8899aa;--card-bg:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--navy);}
-::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
-.cursor-glow{position:fixed;width:320px;height:320px;background:radial-gradient(circle,rgba(30,107,255,0.07) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:all 0.12s ease;}
-.grid-bg{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(30,107,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(30,107,255,0.035) 1px,transparent 1px);background-size:50px 50px;}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(13,27,42,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Space Mono',monospace;font-size:0.88rem;color:var(--cyan);letter-spacing:1px;}
-.nav-logo span{color:var(--white);}
-.nav-links{display:flex;gap:4px;list-style:none;}
-.nav-links a{color:var(--gray);text-decoration:none;padding:7px 14px;border-radius:8px;font-size:0.83rem;font-weight:500;transition:all 0.18s;cursor:pointer;}
-.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(30,107,255,0.15);}
-.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;display:inline-block;margin-right:6px;}
-
-/* SECTIONS */
-section{display:none;min-height:100vh;padding:100px 2.5rem 5rem;max-width:1080px;margin:0 auto;}
-section.active{display:block;}
-#home{display:none;flex-direction:column;justify-content:center;position:relative;padding-top:120px;}
-#home.active{display:flex;}
-
-/* HERO */
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(30,107,255,0.1);border:1px solid rgba(30,107,255,0.28);border-radius:20px;padding:6px 16px;font-size:0.78rem;font-weight:500;color:var(--cyan);width:fit-content;margin-bottom:2rem;animation:fadeDown 0.8s ease both;}
-.hero-title{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:900;line-height:1.18;margin-bottom:1.4rem;animation:fadeUp 0.8s ease 0.15s both;}
-.hero-title .hi{color:rgba(248,250,255,0.9);}
-.hero-title .grad{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-desc{font-size:1rem;color:var(--gray);line-height:1.9;max-width:580px;margin-bottom:2.5rem;animation:fadeUp 0.8s ease 0.3s both;}
-.hero-badges{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:3rem;animation:fadeUp 0.8s ease 0.45s both;}
-.hbadge{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 20px;font-size:0.86rem;transition:all 0.22s;cursor:default;}
-.hbadge:hover{background:rgba(30,107,255,0.1);border-color:rgba(30,107,255,0.4);transform:translateY(-3px);}
-.hbadge-icon{font-size:1.5rem;}
-.hbadge-text strong{display:block;font-size:0.88rem;font-weight:700;color:var(--white);}
-.hbadge-text span{font-size:0.75rem;color:var(--gray);}
-.stats-row{display:flex;gap:20px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.6s both;}
-.stat-box{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px 24px;text-align:center;min-width:110px;transition:all 0.2s;}
-.stat-box:hover{border-color:rgba(30,107,255,0.4);transform:translateY(-2px);}
-.stat-num{font-family:'Space Mono',monospace;font-size:1.9rem;font-weight:700;color:var(--cyan);}
-.stat-label{font-size:0.75rem;color:var(--gray);margin-top:4px;}
-
-/* ROBOT SVG */
-.robot-wrap{position:absolute;right:0;top:50%;transform:translateY(-50%);width:300px;opacity:0.88;animation:fadeLeft 1s ease 0.8s both,float 5s ease-in-out 1.8s infinite;pointer-events:none;}
-@keyframes float{0%,100%{transform:translateY(-50%);}50%{transform:translateY(calc(-50% - 18px));}}
-
-/* ROADMAP */
-.section-header{display:flex;align-items:center;gap:16px;margin-bottom:2.5rem;animation:fadeDown 0.7s ease both;}
-.section-yr{font-family:'Space Mono',monospace;font-size:3rem;font-weight:700;color:rgba(30,107,255,0.18);line-height:1;}
-.section-info h2{font-size:1.65rem;font-weight:800;}
-.section-info p{color:var(--gray);font-size:0.88rem;margin-top:4px;}
-.cat-label{font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:2rem 0 0.75rem;display:flex;align-items:center;gap:10px;}
-.cat-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;margin-bottom:4px;}
-.course-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-size:0.83rem;font-weight:500;text-align:center;transition:all 0.2s;cursor:default;animation:scaleIn 0.4s ease both;}
-.course-card:hover{background:rgba(30,107,255,0.11);border-color:rgba(30,107,255,0.45);color:var(--white);transform:scale(1.04);}
-.course-card.done{background:rgba(0,212,255,0.06);border-color:rgba(0,212,255,0.22);color:#7ee8ff;}
-.course-card.done::after{content:' ✓';}
-.achieve-card{background:linear-gradient(135deg,rgba(30,107,255,0.1),rgba(0,212,255,0.05));border:1px solid rgba(30,107,255,0.28);border-radius:14px;padding:20px 24px;margin-top:1.4rem;display:flex;align-items:center;gap:20px;animation:fadeUp 0.6s ease both;transition:transform 0.2s;}
-.achieve-card:hover{transform:translateY(-3px);}
-.achieve-ico{font-size:2.4rem;flex-shrink:0;}
-.achieve-card h3{font-size:0.95rem;font-weight:700;margin-bottom:5px;}
-.achieve-card p{font-size:0.83rem;color:var(--gray);line-height:1.6;}
-.mil-notice{background:rgba(255,107,53,0.07);border:1px solid rgba(255,107,53,0.22);border-radius:14px;padding:20px 24px;margin-top:2rem;display:flex;align-items:center;gap:16px;animation:fadeUp 0.6s ease 0.3s both;}
-.mil-notice .ico{font-size:2rem;}
-.mil-notice h3{font-size:0.9rem;font-weight:700;color:#ff8c5a;margin-bottom:4px;}
-.mil-notice p{font-size:0.82rem;color:var(--gray);line-height:1.6;}
-
-/* BANNER */
-.yr-banner{width:100%;height:170px;border-radius:16px;overflow:hidden;margin-bottom:2rem;position:relative;}
-.yr-banner-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.yr-banner svg{position:absolute;inset:0;width:100%;height:100%;}
-.yr-banner-text{position:relative;z-index:2;text-align:center;}
-.yr-banner-text h2{font-size:1.55rem;font-weight:900;}
-.yr-banner-text p{color:var(--gray);font-size:0.86rem;margin-top:5px;}
-
-/* BOARD */
-.board-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;animation:fadeDown 0.6s ease both;}
-.write-btn{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:10px 20px;font-size:0.86rem;font-weight:600;cursor:pointer;transition:all 0.18s;font-family:inherit;display:flex;align-items:center;gap:7px;}
-.write-btn:hover{background:#1558d6;transform:translateY(-1px);}
-.board-list{display:flex;flex-direction:column;gap:10px;}
-.board-item{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:17px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;transition:all 0.18s;animation:fadeUp 0.5s ease both;}
-.board-item:hover{border-color:rgba(30,107,255,0.28);background:rgba(30,107,255,0.04);}
-.board-main .num{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--blue);margin-bottom:5px;}
-.board-main .title{font-size:0.95rem;font-weight:600;margin-bottom:5px;}
-.board-main .preview{font-size:0.82rem;color:var(--gray);line-height:1.6;margin-bottom:7px;}
-.board-main .meta{font-size:0.73rem;color:rgba(136,153,170,0.55);}
-.board-actions{display:flex;gap:6px;flex-shrink:0;}
-.btn-edit,.btn-del{padding:6px 12px;border-radius:7px;font-size:0.76rem;cursor:pointer;transition:all 0.14s;font-family:inherit;font-weight:500;}
-.btn-edit{background:transparent;color:var(--gray);border:1px solid var(--border);}
-.btn-edit:hover{background:rgba(30,107,255,0.1);color:var(--cyan);border-color:rgba(30,107,255,0.3);}
-.btn-del{background:transparent;color:var(--gray);border:1px solid var(--border);}
-.btn-del:hover{background:rgba(231,76,60,0.1);color:#e74c3c;border-color:rgba(231,76,60,0.3);}
-.empty-state{text-align:center;padding:5rem 0;color:var(--gray);font-size:0.92rem;}
-.empty-icon{font-size:2.8rem;display:block;margin-bottom:1rem;opacity:0.35;}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal{background:#182538;border:1px solid rgba(30,107,255,0.2);border-radius:18px;padding:2rem;width:90%;max-width:500px;animation:scaleIn 0.22s ease both;}
-.modal h3{font-size:1.05rem;font-weight:700;margin-bottom:1.4rem;}
-.modal label{font-size:0.8rem;color:var(--gray);display:block;margin-bottom:4px;margin-top:12px;}
-.modal input,.modal textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:9px;padding:10px 13px;font-size:0.88rem;color:var(--white);font-family:inherit;resize:vertical;outline:none;transition:border 0.18s;}
-.modal input:focus,.modal textarea:focus{border-color:var(--blue);}
-.modal textarea{min-height:88px;}
-.modal-actions{display:flex;gap:10px;margin-top:1.4rem;justify-content:flex-end;}
-.modal-cancel{background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:9px;padding:10px 18px;font-size:0.86rem;cursor:pointer;font-family:inherit;}
-.modal-cancel:hover{background:rgba(255,255,255,0.04);}
-.modal-submit{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:0.86rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.18s;}
-.modal-submit:hover{background:#1558d6;}
-
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;animation:fadeUp 0.6s ease both;}
-@media(max-width:680px){.contact-grid{grid-template-columns:1fr;}}
-.contact-info h3{font-size:1.15rem;font-weight:700;margin-bottom:0.9rem;}
-.contact-info p{color:var(--gray);font-size:0.88rem;line-height:1.85;margin-bottom:1.4rem;}
-.contact-item{display:flex;align-items:center;gap:12px;margin-bottom:11px;font-size:0.86rem;color:var(--gray);}
-.ci-icon{width:34px;height:34px;border-radius:8px;background:rgba(30,107,255,0.1);border:1px solid rgba(30,107,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
-.contact-form{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:1.6rem;}
-.cf-label{font-size:0.8rem;color:var(--gray);display:block;margin-bottom:5px;margin-top:12px;}
-.cf-label:first-child{margin-top:0;}
-.cf-input,.cf-textarea,.cf-select{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:9px;padding:10px 13px;font-size:0.88rem;color:var(--white);font-family:inherit;resize:vertical;outline:none;transition:border 0.18s;}
-.cf-input:focus,.cf-textarea:focus,.cf-select:focus{border-color:var(--blue);}
-.cf-textarea{min-height:110px;}
-.cf-select option{background:#1b2d45;}
-.cf-submit{width:100%;background:var(--blue);color:#fff;border:none;border-radius:9px;padding:12px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:1.1rem;transition:all 0.18s;}
-.cf-submit:hover{background:#1558d6;transform:translateY(-1px);}
-.cf-sent{display:none;text-align:center;padding:2.5rem 1rem;}
-.cf-sent .big{font-size:3rem;}
-.cf-sent p{margin-top:0.8rem;font-size:0.9rem;color:var(--gray);}
-.back-btn{display:inline-flex;align-items:center;gap:7px;background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:8px 16px;font-size:0.84rem;color:var(--gray);cursor:pointer;margin-bottom:2rem;transition:all 0.18s;font-family:inherit;}
-.back-btn:hover{color:var(--white);border-color:rgba(30,107,255,0.35);background:rgba(30,107,255,0.07);}
-
-/* CURSOR */
-.cursor{display:inline-block;width:3px;height:1em;background:var(--cyan);margin-left:3px;vertical-align:middle;animation:blink 0.9s step-end infinite;}
-@keyframes blink{50%{opacity:0;}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeLeft{from{opacity:0;transform:translateX(50px) translateY(-50%);}to{opacity:0.88;transform:translateX(0) translateY(-50%);}}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.91);}to{opacity:1;transform:scale(1);}}
-.course-card:nth-child(1){animation-delay:.04s}.course-card:nth-child(2){animation-delay:.08s}.course-card:nth-child(3){animation-delay:.12s}.course-card:nth-child(4){animation-delay:.16s}.course-card:nth-child(5){animation-delay:.2s}.course-card:nth-child(6){animation-delay:.24s}.course-card:nth-child(7){animation-delay:.28s}.course-card:nth-child(8){animation-delay:.32s}.course-card:nth-child(9){animation-delay:.36s}.course-card:nth-child(10){animation-delay:.4s}
-@media(max-width:768px){nav{padding:0 1rem;}section{padding:88px 1.2rem 3rem;}.robot-wrap{display:none;}.hero-title{font-size:1.9rem;}.course-grid{grid-template-columns:1fr 1fr;}.nav-links a{padding:5px 8px;font-size:0.76rem;}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetSpot - 지역별 맛집 검색</title>
+    <!-- 폰트 및 아이콘 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 커스텀 스타일 -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="grid-bg"></div>
-<div class="cursor-glow" id="glow"></div>
+    <!-- Header -->
+    <header id="navbar">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i> GourmetSpot
+            </a>
+            <nav>
+                <a href="#" class="active">홈</a>
+                <a href="#">탐색</a>
+                <a href="#">베스트 맛집</a>
+            </nav>
+            <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
 
-<nav>
-  <div class="nav-logo"><span class="nav-dot"></span>RSW<span>.</span>PORT</div>
-  <ul class="nav-links">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">홈</a></li>
-    <li><a onclick="showPage('year1')" id="nav-year1">1학년</a></li>
-    <li><a onclick="showPage('year2')" id="nav-year2">2학년</a></li>
-    <li><a onclick="showPage('board')" id="nav-board">자유게시판</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact">문의하기</a></li>
-  </ul>
-</nav>
+    <!-- Hero Section with Search -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in-up">숨겨진 나만의 맛집을 찾아보세요</h1>
+            <p class="fade-in-up delay-1">발길이 머무는 어느 곳이든, 검증된 미식의 경험과 품격 있는 식탁을 제안합니다.</p>
+            
+            <div class="search-box fade-in-up delay-2">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-input" placeholder="검색어를 자유롭게 입력해 보세요 (예: 애월읍, 스타벅스, 고척돔 냉면)" autocomplete="off">
+                <button id="search-btn">검색</button>
+            </div>
+            <div class="popular-tags fade-in-up delay-3">
+                <span>추천 검색어:</span>
+                <span class="tag" data-search="고척돔 냉면">고척돔 냉면</span>
+                <span class="tag" data-search="스타벅스">스타벅스</span>
+                <span class="tag" data-search="청라">인천 청라</span>
+                <span class="tag" data-search="해운대 수제버거">해운대 수제버거</span>
+            </div>
+        </div>
+    </section>
 
-<!-- HOME -->
-<section id="home" class="active">
-  <div class="hero-tag">🤖 동양미래대학교 · 로봇소프트웨어과</div>
-  <h1 class="hero-title">
-    <span class="hi">안녕하세요,<br></span>
-    <span class="grad" id="typed-title"></span><span class="cursor"></span>
-  </h1>
-  <p class="hero-desc">동양미래대학교 로봇소프트웨어과 2학년 재학생입니다.<br>학교 홍보 쇼츠 공모전 최우수상(1등), 캡스톤디자인 로봇 경주대회 장려상을 수상했으며,<br>2학년 1학기 수료 후 군 입대를 앞두고 있습니다.</p>
-  <div class="hero-badges">
-    <div class="hbadge"><span class="hbadge-icon">🏆</span><div class="hbadge-text"><strong>쇼츠 제작 최우수상 1등</strong><span>학교 홍보 영상 공모전</span></div></div>
-    <div class="hbadge"><span class="hbadge-icon">🤖</span><div class="hbadge-text"><strong>캡스톤디자인 장려상</strong><span>로봇 경주대회 과 5등</span></div></div>
-    <div class="hbadge"><span class="hbadge-icon">🎖️</span><div class="hbadge-text"><strong>군 입대 예정</strong><span>2학년 2학기 휴학 후 입대</span></div></div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><div class="stat-num" data-target="2">0</div><div class="stat-label">수상 횟수</div></div>
-    <div class="stat-box"><div class="stat-num" data-target="3">0</div><div class="stat-label">이수 학기</div></div>
-    <div class="stat-box"><div class="stat-num" data-target="30">0</div><div class="stat-label">이수 과목+</div></div>
-    <div class="stat-box"><div class="stat-num" data-target="100">0</div><div class="stat-label">열정 %</div></div>
-  </div>
+    <!-- Results Section -->
+    <section class="results-section container">
+        <!-- Category Filters -->
+        <div class="category-filters fade-in-up">
+            <button class="filter-btn active" data-type="all">전체보기</button>
+            <button class="filter-btn" data-type="한식">한식</button>
+            <button class="filter-btn" data-type="분식">분식</button>
+            <button class="filter-btn" data-type="중식">중식</button>
+            <button class="filter-btn" data-type="일식">일식</button>
+            <button class="filter-btn" data-type="양식">양식</button>
+            <button class="filter-btn" data-type="기타">기타 세계요리</button>
+        </div>
 
-  <!-- Robot SVG -->
-  <div class="robot-wrap" aria-hidden="true">
-    <svg viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="150" cy="330" rx="75" ry="16" fill="rgba(30,107,255,0.12)"/>
-      <rect x="100" y="255" width="32" height="68" rx="10" fill="#1b2d45" stroke="rgba(30,107,255,0.4)" stroke-width="1.5"/>
-      <rect x="168" y="255" width="32" height="68" rx="10" fill="#1b2d45" stroke="rgba(30,107,255,0.4)" stroke-width="1.5"/>
-      <rect x="92" y="310" width="46" height="16" rx="7" fill="#1e6bff" opacity="0.65"/>
-      <rect x="162" y="310" width="46" height="16" rx="7" fill="#1e6bff" opacity="0.65"/>
-      <rect x="72" y="145" width="156" height="120" rx="18" fill="#1b2d45" stroke="rgba(30,107,255,0.5)" stroke-width="1.5"/>
-      <rect x="90" y="162" width="120" height="66" rx="11" fill="rgba(30,107,255,0.09)" stroke="rgba(30,107,255,0.22)" stroke-width="1"/>
-      <circle cx="114" cy="183" r="7.5" fill="#1e6bff" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.6s" repeatCount="indefinite"/></circle>
-      <circle cx="140" cy="183" r="7.5" fill="#00d4ff" opacity="0.7"><animate attributeName="opacity" values="0.7;1;0.7" dur="1.2s" repeatCount="indefinite"/></circle>
-      <circle cx="166" cy="183" r="7.5" fill="#1e6bff" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="1.9s" repeatCount="indefinite"/></circle>
-      <rect x="98" y="206" width="104" height="3" rx="1.5" fill="rgba(0,212,255,0.28)"/>
-      <rect x="98" y="216" width="76" height="3" rx="1.5" fill="rgba(0,212,255,0.18)"/>
-      <rect x="30" y="152" width="44" height="20" rx="8" fill="#1b2d45" stroke="rgba(30,107,255,0.35)" stroke-width="1.5"/>
-      <rect x="22" y="167" width="52" height="74" rx="13" fill="#1b2d45" stroke="rgba(30,107,255,0.35)" stroke-width="1.5"/>
-      <circle cx="48" cy="248" r="11" fill="rgba(30,107,255,0.18)" stroke="rgba(30,107,255,0.45)" stroke-width="1.5"/>
-      <rect x="226" y="152" width="44" height="20" rx="8" fill="#1b2d45" stroke="rgba(30,107,255,0.35)" stroke-width="1.5"/>
-      <rect x="226" y="167" width="52" height="74" rx="13" fill="#1b2d45" stroke="rgba(30,107,255,0.35)" stroke-width="1.5"/>
-      <circle cx="252" cy="248" r="11" fill="rgba(30,107,255,0.18)" stroke="rgba(30,107,255,0.45)" stroke-width="1.5"/>
-      <rect x="130" y="132" width="40" height="18" rx="6" fill="#1b2d45" stroke="rgba(30,107,255,0.28)" stroke-width="1"/>
-      <rect x="70" y="52" width="160" height="86" rx="21" fill="#1b2d45" stroke="rgba(30,107,255,0.55)" stroke-width="1.5"/>
-      <line x1="150" y1="52" x2="150" y2="24" stroke="rgba(30,107,255,0.55)" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="150" cy="17" r="7" fill="#1e6bff"><animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/></circle>
-      <rect x="90" y="74" width="42" height="26" rx="9" fill="rgba(0,212,255,0.13)" stroke="rgba(0,212,255,0.45)" stroke-width="1.5"/>
-      <rect x="168" y="74" width="42" height="26" rx="9" fill="rgba(0,212,255,0.13)" stroke="rgba(0,212,255,0.45)" stroke-width="1.5"/>
-      <rect x="98" y="81" width="26" height="12" rx="4" fill="#00d4ff" opacity="0.88"><animate attributeName="opacity" values="0.88;0.25;0.88" dur="3s" repeatCount="indefinite"/></rect>
-      <rect x="176" y="81" width="26" height="12" rx="4" fill="#00d4ff" opacity="0.88"><animate attributeName="opacity" values="0.88;0.25;0.88" dur="3s" repeatCount="indefinite"/></rect>
-      <rect x="112" y="118" width="76" height="9" rx="4" fill="rgba(30,107,255,0.28)"/>
-      <rect x="120" y="120" width="18" height="5" rx="2.5" fill="#1e6bff" opacity="0.75"/>
-      <rect x="141" y="120" width="18" height="5" rx="2.5" fill="#00d4ff" opacity="0.55"/>
-      <rect x="164" y="120" width="16" height="5" rx="2.5" fill="#1e6bff" opacity="0.75"/>
-    </svg>
-  </div>
-</section>
+        <div class="results-header">
+            <h2 id="results-title">추천 맛집</h2>
+            <p id="results-count">전체 <span class="highlight">6</span>개의 결과가 있습니다.</p>
+        </div>
 
-<!-- 1학년 -->
-<section id="year1">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
-  <div class="yr-banner">
-    <div class="yr-banner-inner" style="background:linear-gradient(135deg,rgba(30,107,255,0.16),rgba(0,212,255,0.07));">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 170" preserveAspectRatio="none">
-        <defs><pattern id="d1" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="rgba(30,107,255,0.18)"/></pattern></defs>
-        <rect width="1080" height="170" fill="url(#d1)"/>
-        <polyline points="0,85 110,85 140,55 290,55 320,85 480,85" stroke="rgba(30,107,255,0.3)" stroke-width="1.5" fill="none"/>
-        <polyline points="580,85 730,85 760,115 880,115 910,85 1080,85" stroke="rgba(0,212,255,0.22)" stroke-width="1.5" fill="none"/>
-        <circle cx="320" cy="85" r="4.5" fill="rgba(30,107,255,0.65)"/>
-        <circle cx="760" cy="115" r="4.5" fill="rgba(0,212,255,0.55)"/>
-      </svg>
-      <div class="yr-banner-text"><h2>1학년 학사 로드맵</h2><p>전공기초부터 차근차근 — 로봇 & 소프트웨어의 첫걸음</p></div>
-    </div>
-  </div>
-  <div class="section-header">
-    <div class="section-yr">01</div>
-    <div class="section-info"><h2>전공기초 &amp; 핵심 실무</h2><p>1학년 과정에서 이수한 과목들</p></div>
-  </div>
-  <div class="cat-label">전공기초</div>
-  <div class="course-grid">
-    <div class="course-card done">엔지니어링 기초</div><div class="course-card done">3차원CAD</div><div class="course-card done">컴퓨터와챗GPT활용</div><div class="course-card done">로봇기초실습</div><div class="course-card done">전공영어</div>
-  </div>
-  <div class="cat-label">전공실무 — 기초기술</div>
-  <div class="course-grid">
-    <div class="course-card done">기계제도</div><div class="course-card done">로봇공학기초</div><div class="course-card done">CAD기초</div><div class="course-card done">전기회로</div><div class="course-card done">전자회로</div><div class="course-card done">디지털논리회로</div><div class="course-card done">파이썬프로그래밍</div>
-  </div>
-  <div class="cat-label">전공실무 — 응용기술</div>
-  <div class="course-grid">
-    <div class="course-card done">인공지능개론</div><div class="course-card done">마이크로컨트롤러</div><div class="course-card done">PLC프로그래밍</div><div class="course-card done">로봇오퍼레이션</div><div class="course-card done">아두이노프로그래밍</div><div class="course-card done">윈도우프로그래밍</div><div class="course-card done">웹프로그래밍</div><div class="course-card done">ROS프로그래밍기초</div><div class="course-card done">PLC제어</div><div class="course-card done">PC기반제어</div>
-  </div>
-  <div class="achieve-card"><div class="achieve-ico">🏆</div><div><h3>학교 홍보 쇼츠 제작 대회 — 최우수상 1등</h3><p>학교 홍보 영상 공모전에서 기획·촬영·편집을 직접 진행하여 최우수상을 수상하였습니다. 학과의 매력과 로봇공학의 재미를 쇼츠 형식으로 담아냈습니다.</p></div></div>
-  <div class="achieve-card" style="animation-delay:0.15s;"><div class="achieve-ico">🤖</div><div><h3>캡스톤디자인 로봇 경주대회 — 장려상 (과 5등)</h3><p>학년별 캡스톤 디자인 프로젝트로 로봇 경주 대회에 출전, 팀원들과 함께 로봇 설계부터 제어 코드 구현까지 전 과정을 담당하여 장려상을 수상하였습니다.</p></div></div>
-</section>
+        <!-- Grid Container for Restaurant Cards -->
+        <div id="results-grid" class="grid">
+            <!-- JavaScript will inject cards here -->
+        </div>
 
-<!-- 2학년 -->
-<section id="year2">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
-  <div class="yr-banner">
-    <div class="yr-banner-inner" style="background:linear-gradient(135deg,rgba(0,212,255,0.11),rgba(30,107,255,0.07));">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 170" preserveAspectRatio="none">
-        <defs><pattern id="g2" x="0" y="0" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0L0 0 0 38" fill="none" stroke="rgba(0,212,255,0.1)" stroke-width="0.7"/></pattern></defs>
-        <rect width="1080" height="170" fill="url(#g2)"/>
-        <polyline points="0,130 190,130 230,55 440,55 480,95 680,95 720,45 880,45 920,85 1080,85" stroke="rgba(0,212,255,0.28)" stroke-width="1.5" fill="none"/>
-        <circle cx="480" cy="95" r="5" fill="rgba(0,212,255,0.7)"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
-        <circle cx="230" cy="55" r="4" fill="rgba(30,107,255,0.6)"/>
-      </svg>
-      <div class="yr-banner-text"><h2>2학년 학사 로드맵</h2><p>심화 전공실무 · 캡스톤디자인 · 현장실습</p></div>
-    </div>
-  </div>
-  <div class="section-header">
-    <div class="section-yr" style="color:rgba(0,212,255,0.18);">02</div>
-    <div class="section-info"><h2>전공실무 심화 &amp; 전공분야</h2><p>현재 1학기 수강중 · 2학기 휴학 후 군 입대 예정</p></div>
-  </div>
-  <div class="cat-label">전공실무 — 심화응용 (1학기 수강중)</div>
-  <div class="course-grid">
-    <div class="course-card done">인공지능응용</div><div class="course-card done">펌웨어프로그래밍</div><div class="course-card done">모바일앱프로그래밍</div><div class="course-card done">자동화통신</div><div class="course-card done">CAD 응용</div><div class="course-card done">ROS프로그래밍응용</div><div class="course-card done">로봇공학응용</div><div class="course-card done">로봇센서</div><div class="course-card done">모터제어</div>
-  </div>
-  <div class="cat-label">전공분야 (복학 후 이수 예정)</div>
-  <div class="course-grid">
-    <div class="course-card">학년별 캡스톤 디자인</div><div class="course-card">현장실습</div><div class="course-card">취업 및 창업실무</div><div class="course-card">로봇 소프트웨어 전공</div>
-  </div>
-  <div class="mil-notice"><span class="ico">🎖️</span><div><h3>2학년 2학기 — 휴학 및 군 입대 예정</h3><p>2학년 1학기를 마치고 2학기에 휴학하여 군에 입대할 예정입니다. 군 복무를 마친 후 복학하여 남은 전공분야 과목들을 이수하고, 로봇 소프트웨어 분야에서 더욱 성장한 모습으로 돌아오겠습니다.</p></div></div>
-</section>
+        <!-- Empty State (Hidden initially) -->
+        <div id="empty-state" class="empty-state hidden">
+            <i class="far fa-sad-tear"></i>
+            <h3>검색 결과가 없습니다.</h3>
+            <p>다른 지역이나 지역명을 정확히 입력해 보세요.</p>
+        </div>
+    </section>
 
-<!-- 자유게시판 -->
-<section id="board">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
-  <div class="section-header">
-    <div class="section-yr" style="color:rgba(255,107,53,0.18);">BRD</div>
-    <div class="section-info"><h2>자유게시판</h2><p>자유롭게 이야기를 나눠요</p></div>
-  </div>
-  <div class="board-toolbar">
-    <span style="font-size:0.84rem;color:var(--gray);">총 <strong id="post-count" style="color:var(--white);">0</strong>개의 글</span>
-    <button class="write-btn" onclick="openWriteModal()">✏️ 글 쓰기</button>
-  </div>
-  <div class="board-list" id="board-list">
-    <div class="empty-state"><span class="empty-icon">📭</span>아직 작성된 글이 없습니다.<br>첫 번째 글을 남겨보세요!</div>
-  </div>
-</section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GourmetSpot. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-<!-- 문의하기 -->
-<section id="contact">
-  <button class="back-btn" onclick="goBack()">← 뒤로 가기</button>
-  <div class="section-header">
-    <div class="section-yr" style="color:rgba(0,212,255,0.18);">MSG</div>
-    <div class="section-info"><h2>문의하기</h2><p>궁금한 점이 있으면 언제든지 연락해 주세요</p></div>
-  </div>
-  <div class="contact-grid">
-    <div class="contact-info">
-      <h3>반갑습니다 👋</h3>
-      <p>로봇소프트웨어과 2학년 학생입니다.<br>프로젝트 협업, 학과 관련 질문,<br>또는 그냥 인사도 환영합니다!</p>
-      <div class="contact-item"><div class="ci-icon">🏫</div><span>동양미래대학교 로봇소프트웨어과</span></div>
-      <div class="contact-item"><div class="ci-icon">📍</div><span>서울특별시 구로구</span></div>
-      <div class="contact-item"><div class="ci-icon">🎓</div><span>2학년 재학중 (군 입대 예정)</span></div>
-      <div class="contact-item"><div class="ci-icon">💻</div><span>ROS · Python · Arduino · CAD</span></div>
-      <div style="margin-top:2rem;text-align:center;">
-        <svg width="90" height="110" viewBox="0 0 90 110" fill="none" style="opacity:0.55;animation:float 4s ease-in-out infinite;">
-          <circle cx="45" cy="12" r="7" fill="#1e6bff"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></circle>
-          <line x1="45" y1="19" x2="45" y2="29" stroke="rgba(30,107,255,0.5)" stroke-width="2"/>
-          <rect x="20" y="29" width="50" height="34" rx="9" fill="#1b2d45" stroke="rgba(30,107,255,0.4)" stroke-width="1.2"/>
-          <rect x="29" y="40" width="10" height="6" rx="2" fill="#00d4ff" opacity="0.85"/>
-          <rect x="51" y="40" width="10" height="6" rx="2" fill="#00d4ff" opacity="0.85"/>
-          <rect x="8" y="34" width="13" height="25" rx="6" fill="#1b2d45" stroke="rgba(30,107,255,0.3)" stroke-width="1"/>
-          <rect x="69" y="34" width="13" height="25" rx="6" fill="#1b2d45" stroke="rgba(30,107,255,0.3)" stroke-width="1"/>
-          <rect x="27" y="63" width="14" height="28" rx="6" fill="#1b2d45" stroke="rgba(30,107,255,0.3)" stroke-width="1"/>
-          <rect x="49" y="63" width="14" height="28" rx="6" fill="#1b2d45" stroke="rgba(30,107,255,0.3)" stroke-width="1"/>
-          <rect x="22" y="85" width="22" height="9" rx="4" fill="#1e6bff" opacity="0.6"/>
-          <rect x="46" y="85" width="22" height="9" rx="4" fill="#1e6bff" opacity="0.6"/>
-        </svg>
-      </div>
-    </div>
-    <div class="contact-form" id="cf-form-wrap">
-      <div id="cf-form">
-        <label class="cf-label">이름</label>
-        <input class="cf-input" id="cf-name" placeholder="이름을 입력하세요"/>
-        <label class="cf-label">문의 유형</label>
-        <select class="cf-select" id="cf-type">
-          <option value="">선택해 주세요</option>
-          <option value="학과 관련">학과 관련 질문</option>
-          <option value="프로젝트 협업">프로젝트 협업 제안</option>
-          <option value="기타">기타</option>
-        </select>
-        <label class="cf-label">메시지</label>
-        <textarea class="cf-textarea" id="cf-msg" placeholder="궁금한 내용을 자유롭게 작성해 주세요"></textarea>
-        <button class="cf-submit" onclick="submitContact()">문의 보내기 →</button>
-      </div>
-      <div class="cf-sent" id="cf-sent"><div class="big">✅</div><p>문의가 접수되었습니다!<br>빠른 시일 내에 답변드리겠습니다.</p></div>
-    </div>
-  </div>
-  <div style="margin-top:2.5rem;">
-    <div class="board-toolbar">
-      <h3 style="font-size:1rem;font-weight:700;">문의 내역</h3>
-      <span style="font-size:0.8rem;color:var(--gray);">총 <strong id="contact-count" style="color:var(--white);">0</strong>건</span>
-    </div>
-    <div class="board-list" id="contact-list">
-      <div class="empty-state"><span class="empty-icon">📩</span>아직 문의 내역이 없습니다.</div>
-    </div>
-  </div>
-</section>
-
-<!-- MODALS -->
-<div class="modal-overlay" id="write-modal">
-  <div class="modal">
-    <h3>✏️ 새 글 작성</h3>
-    <label>제목</label><input id="modal-post-title" placeholder="제목을 입력하세요"/>
-    <label>내용</label><textarea id="modal-post-body" placeholder="내용을 입력하세요"></textarea>
-    <label>작성자</label><input id="modal-post-author" placeholder="닉네임 (미입력 시 익명)"/>
-    <div class="modal-actions"><button class="modal-cancel" onclick="closeModal('write-modal')">취소</button><button class="modal-submit" onclick="submitPost()">등록하기</button></div>
-  </div>
-</div>
-<div class="modal-overlay" id="edit-modal">
-  <div class="modal">
-    <h3>✏️ 글 수정</h3>
-    <input type="hidden" id="edit-post-id"/>
-    <label>제목</label><input id="edit-post-title"/>
-    <label>내용</label><textarea id="edit-post-body"></textarea>
-    <div class="modal-actions"><button class="modal-cancel" onclick="closeModal('edit-modal')">취소</button><button class="modal-submit" onclick="saveEdit()">수정 완료</button></div>
-  </div>
-</div>
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal" style="max-width:340px;text-align:center;">
-    <div style="font-size:2.4rem;margin-bottom:0.9rem;">🗑️</div>
-    <h3>정말 삭제할까요?</h3>
-    <p style="color:var(--gray);font-size:0.83rem;margin-top:7px;">삭제된 글은 복구할 수 없습니다.</p>
-    <div class="modal-actions" style="justify-content:center;">
-      <button class="modal-cancel" onclick="closeModal('confirm-modal')">취소</button>
-      <button class="modal-submit" style="background:#e74c3c;" onclick="confirmDelete()">삭제</button>
-    </div>
-  </div>
-</div>
-
-<script>
-document.addEventListener('mousemove',e=>{const g=document.getElementById('glow');g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';});
-
-const phrases=['로봇소프트웨어 전공생입니다.','미래를 설계하는 엔지니어입니다.','끊임없이 성장하는 중입니다.'];
-let pi=0,ci=0,isDeleting=false;
-const el=document.getElementById('typed-title');
-function type(){const cur=phrases[pi];el.textContent=isDeleting?cur.substring(0,ci--):cur.substring(0,ci++);let d=isDeleting?50:80;if(!isDeleting&&ci===cur.length+1){d=2200;isDeleting=true;}else if(isDeleting&&ci<0){isDeleting=false;pi=(pi+1)%phrases.length;ci=0;d=400;}setTimeout(type,d);}
-setTimeout(type,900);
-
-function animateCounters(){document.querySelectorAll('.stat-num[data-target]').forEach(el=>{const t=+el.dataset.target;let c=0;const s=Math.ceil(t/40);const id=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c;if(c>=t)clearInterval(id);},40);});}
-
-let prevPage='home';
-function showPage(id){prevPage=document.querySelector('section.active')?.id||'home';document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));document.getElementById(id).classList.add('active');const n=document.getElementById('nav-'+id);if(n)n.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='home')animateCounters();}
-function goBack(){showPage(prevPage);}
-
-let posts=[],pId=1;
-function renderBoard(){const list=document.getElementById('board-list');document.getElementById('post-count').textContent=posts.length;if(!posts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📭</span>아직 작성된 글이 없습니다.<br>첫 번째 글을 남겨보세요!</div>';return;}list.innerHTML=posts.map((p,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">#${String(p.id).padStart(3,'0')}</div><div class="title">${esc(p.title)}</div><div class="preview">${esc(p.body.length>80?p.body.slice(0,80)+'…':p.body)}</div><div class="meta">${esc(p.author)} · ${p.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${p.id},'board')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${p.id},'board')">삭제</button></div></div>`).join('');}
-
-let contacts=[],cId=1;
-function renderContacts(){const list=document.getElementById('contact-list');document.getElementById('contact-count').textContent=contacts.length;if(!contacts.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📩</span>아직 문의 내역이 없습니다.</div>';return;}list.innerHTML=contacts.map((c,i)=>`<div class="board-item" style="animation-delay:${i*0.06}s"><div class="board-main"><div class="num">[${esc(c.type||'기타')}]</div><div class="title">${esc(c.name)}님의 문의</div><div class="preview">${esc(c.msg.length>80?c.msg.slice(0,80)+'…':c.msg)}</div><div class="meta">${c.date}</div></div><div class="board-actions"><button class="btn-edit" onclick="openEditModal(${c.id},'contact')">수정</button><button class="btn-del" onclick="openDeleteConfirm(${c.id},'contact')">삭제</button></div></div>`).join('');}
-
-function openWriteModal(){['modal-post-title','modal-post-body','modal-post-author'].forEach(id=>document.getElementById(id).value='');document.getElementById('write-modal').classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function submitPost(){const t=document.getElementById('modal-post-title').value.trim();const b=document.getElementById('modal-post-body').value.trim();const a=document.getElementById('modal-post-author').value.trim()||'익명';if(!t||!b){alert('제목과 내용을 입력해 주세요.');return;}posts.unshift({id:pId++,title:t,body:b,author:a,date:now()});closeModal('write-modal');renderBoard();}
-
-let deleteId=null,deleteType='board';
-function openDeleteConfirm(id,type){deleteId=id;deleteType=type;document.getElementById('confirm-modal').classList.add('open');}
-function confirmDelete(){if(deleteType==='board'){posts=posts.filter(p=>p.id!==deleteId);renderBoard();}else{contacts=contacts.filter(c=>c.id!==deleteId);renderContacts();}closeModal('confirm-modal');}
-
-let editType='board';
-function openEditModal(id,type){editType=type;const items=type==='board'?posts:contacts;const item=items.find(x=>x.id===id);if(!item)return;document.getElementById('edit-post-id').value=id;document.getElementById('edit-post-title').value=type==='board'?item.title:item.name;document.getElementById('edit-post-body').value=type==='board'?item.body:item.msg;document.getElementById('edit-modal').classList.add('open');}
-function saveEdit(){const id=+document.getElementById('edit-post-id').value;const t=document.getElementById('edit-post-title').value.trim();const b=document.getElementById('edit-post-body').value.trim();if(!t||!b){alert('내용을 입력해 주세요.');return;}if(editType==='board'){const p=posts.find(x=>x.id===id);if(p){p.title=t;p.body=b;}renderBoard();}else{const c=contacts.find(x=>x.id===id);if(c){c.name=t;c.msg=b;}renderContacts();}closeModal('edit-modal');}
-
-function submitContact(){const name=document.getElementById('cf-name').value.trim();const type=document.getElementById('cf-type').value;const msg=document.getElementById('cf-msg').value.trim();if(!name||!msg){alert('이름과 메시지를 입력해 주세요.');return;}contacts.unshift({id:cId++,name,type,msg,date:now()});renderContacts();document.getElementById('cf-form').style.display='none';document.getElementById('cf-sent').style.display='block';setTimeout(()=>{document.getElementById('cf-form').style.display='block';document.getElementById('cf-sent').style.display='none';['cf-name','cf-msg'].forEach(id=>document.getElementById(id).value='');document.getElementById('cf-type').value='';},3000);}
-
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function now(){const d=new Date();return`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
-document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
-animateCounters();
-</script>
+    <!-- Scripts -->
+    <script src="main.js"></script>
 </body>
 </html>
